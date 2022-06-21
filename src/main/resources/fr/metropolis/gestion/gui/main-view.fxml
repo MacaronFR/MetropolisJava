@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import fr.metropolis.gestion.gui.ColumnID?>
+<VBox alignment="CENTER" prefHeight="555.0" prefWidth="1049.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.metropolis.gestion.gui.MainController">
+    <MenuBar fx:id="menuBar">
+        <Menu text="Projects" fx:id="menuProjects"/>
+    </MenuBar>
+    <children>
+        <TabPane prefHeight="588.0" prefWidth="1012.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <tabs>
+                <Tab text="Kanban">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <HBox fx:id="kanban" alignment="CENTER_LEFT" layoutX="217.0" layoutY="97.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#onAddClick" text="+" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</VBox>
