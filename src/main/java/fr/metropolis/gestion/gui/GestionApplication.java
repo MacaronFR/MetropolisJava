@@ -1,16 +1,11 @@
 package fr.metropolis.gestion.gui;
 
-import fr.metropolis.gestion.api.db.Projects;
-import fr.metropolis.gestion.api.db.Users;
+import fr.metropolis.gestion.PluginLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 public class GestionApplication extends Application {
 	@Override
@@ -20,6 +15,8 @@ public class GestionApplication extends Application {
 		stage.setTitle("Gestion de projet");
 		stage.setScene(scene);
 		stage.show();
+		PluginLoader pl = new PluginLoader();
+		pl.loadPlugin();
 	}
 
 	public static void main(String[] args) {

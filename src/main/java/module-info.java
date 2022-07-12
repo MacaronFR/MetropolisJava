@@ -1,5 +1,6 @@
 module fr.metropolis.gestion {
-    requires javafx.controls;
+	uses fr.metropolis.gestion.Plugin;
+	requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
 
