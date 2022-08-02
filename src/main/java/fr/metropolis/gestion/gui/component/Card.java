@@ -10,9 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
@@ -29,6 +28,7 @@ public class Card extends VBox {
 	private final TextArea description;
 
 	public Card(ColumnID colID, VBox col, MainController ctrl, Cards.Card dbCard) {
+		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), BorderWidths.DEFAULT)));
 		this.dbCard = dbCard;
 		this.ctrl = ctrl;
 		HBox head = new HBox();
@@ -71,6 +71,8 @@ public class Card extends VBox {
 		this.getChildren().add(move);
 		col.getChildren().add(col.getChildren().size() - 1, this);
 		move.getChildren().add(left);
+
+		description.setMaxWidth(290);
 
 		left.addEventHandler(MouseEvent.MOUSE_CLICKED, (event1 -> {
 			int id = colID.getId();
@@ -207,6 +209,7 @@ public class Card extends VBox {
 	private void removeCard(MouseEvent event) {
 		VBox card = (VBox) ((Button) event.getSource()).getParent().getParent();
 		((VBox) card.getParent()).getChildren().remove(card);
+		ctrl.cards.delete(dbCard);
 	}
 
 	private void changeEndDate(ActionEvent event) {

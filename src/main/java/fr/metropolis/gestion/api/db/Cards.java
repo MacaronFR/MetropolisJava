@@ -111,6 +111,17 @@ public class Cards extends DB<Cards.Card>{
 		}
 	}
 
+	public void delete(Card card){
+		String req = "DELETE FROM CARDS WHERE ".concat(idCol).concat("=?");
+		try{
+			PreparedStatement stmt = con.prepareStatement(req);
+			stmt.setInt(1, card.id);
+			stmt.executeUpdate();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
 	static public class Card implements TableRow<Card>{
 
 		private int id;
