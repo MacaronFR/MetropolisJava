@@ -79,7 +79,7 @@ abstract public class DB<T> {
 	}
 
 	protected final ResultSet getDataByColumn(String column, String value){
-		String req = "SELECT * FROM ".concat(tableName.concat(" WHERE ").concat(column.concat("=".concat(value))));
+		String req = "SELECT * FROM ".concat(tableName.concat(" WHERE ").concat(column.concat("='".concat(value)))).concat("';");
 		return makeQuery(req);
 	}
 

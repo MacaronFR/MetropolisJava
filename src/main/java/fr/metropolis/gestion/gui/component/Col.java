@@ -44,7 +44,8 @@ public final class Col extends ScrollPane {
 		list.getChildren().add(addCard);
 		pane.getChildren().add(list);
 		setContent(pane);
-		setPrefWidth(300);
+		setMinWidth(300);
+		setMaxWidth(300);
 		cardList = list;
 		getCards();
 	}

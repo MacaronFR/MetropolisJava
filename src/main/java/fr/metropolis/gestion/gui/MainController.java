@@ -6,20 +6,13 @@ import fr.metropolis.gestion.api.db.Projects;
 import fr.metropolis.gestion.api.db.Users;
 import fr.metropolis.gestion.gui.component.Card;
 import fr.metropolis.gestion.gui.component.Col;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
-
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,16 +22,13 @@ public class MainController implements Initializable {
 
 	public MainController(){
 		columnIDs = new ArrayList<>();
-		users = new Users();
 		projects = new Projects();
 		columns = new Columns();
 		cards = new Cards();
 	}
 
-	private int userID = 1;
-
-	private Users users;
-	private Projects projects;
+	private final int userID = 1;
+	private final Projects projects;
 	public Columns columns;
 	public Cards cards;
 
@@ -49,26 +39,40 @@ public class MainController implements Initializable {
 		List<Projects.Project> lp = projects.getProjectByUser(userID);
 		lp.forEach((project) -> {
 			MenuItem m = new MenuItem(project.getName());
+			m.setUserData(project);
 			menuProjects.getItems().add(m);
+			m.setOnAction((event) -> {
+				MenuItem obj = (MenuItem) event.getSource();
+				Projects.Project p = (Projects.Project) obj.getUserData();
+				initProject(p);
+			});
 		});
 		if(!lp.isEmpty()){
-			actualProject = lp.get(0);
-			List<Columns.Column> lc = columns.getByProject(actualProject.getId());
-			for(int i = 0; i < lc.size(); ++i){
-				Col col = new Col(lc.get(i).getName(), lc.get(i).getId() , this);
-				col.setListener((observable, oldValue, newValue) -> {
-					if(oldValue != newValue && !newValue){
-						columns.updateName(col.getName(), col.getDbID());
-					}
-				});
-				columnIDs.add(col);
-				kanban.getChildren().add(kanban.getChildren().size() - 1, col);
-			}
+			initProject(lp.get(0));
+		}
+	}
+
+	private void initProject(Projects.Project project){
+		actualProject = project;
+		kanban.getChildren().clear();
+		List<Columns.Column> lc = columns.getByProject(actualProject.getId());
+		for (Columns.Column column : lc) {
+			Col col = new Col(column.getName(), column.getId(), this);
+			col.setListener((observable, oldValue, newValue) -> {
+				if (oldValue != newValue && !newValue) {
+					columns.updateName(col.getName(), col.getDbID());
+				}
+			});
+			columnIDs.add(col);
+			kanban.getChildren().add(col);
 		}
 	}
 
 	@FXML
 	private HBox kanban;
+
+	@FXML
+	private Button add;
 
 	@FXML
 	public final List<Col> columnIDs;
@@ -94,7 +98,7 @@ public class MainController implements Initializable {
 			}
 		});
 		columnIDs.add(newCol);
-		kanban.getChildren().add(kanban.getChildren().size() - 1, newCol);
+		kanban.getChildren().add(newCol);
 	}
 
 	@FXML

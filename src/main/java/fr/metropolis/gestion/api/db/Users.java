@@ -2,8 +2,6 @@ package fr.metropolis.gestion.api.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Users extends DB<Users.User>{
 	public Users(){
@@ -19,16 +17,10 @@ public class Users extends DB<Users.User>{
 
 	public User getByName(String name){
 		ResultSet data = getDataByColumn("name", name);
-		try {
-			if(data.next()){
-				return new User().buildFromResultSet(data);
-			}else{
-				return null;
-			}
-		}catch (SQLException e){
-			e.printStackTrace();
+		if(data == null){
 			return null;
 		}
+		return new User().buildFromResultSet(data);
 	}
 
 	static public class User implements TableRow<User>{
