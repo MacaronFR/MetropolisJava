@@ -5,12 +5,21 @@ import fr.metropolis.gestion.api.db.Columns;
 import fr.metropolis.gestion.api.db.Projects;
 import fr.metropolis.gestion.gui.component.Card;
 import fr.metropolis.gestion.gui.component.Col;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +45,24 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<Projects.Project> lp = projects.getProjectByUser(userID);
-		lp.forEach((project) -> {
+		initProjectsList(lp);
+		if(!lp.isEmpty()){
+			initProject(lp.get(0));
+		}
+	}
+
+	private void initProjectsList(List<Projects.Project> list){
+		menuProjects.getItems().clear();
+		list.forEach((project) -> {
 			MenuItem m = new MenuItem(project.getName());
-			m.setUserData(project);
 			menuProjects.getItems().add(m);
+			m.setUserData(project);
 			m.setOnAction((event) -> {
 				MenuItem obj = (MenuItem) event.getSource();
 				Projects.Project p = (Projects.Project) obj.getUserData();
 				initProject(p);
 			});
 		});
-		if(!lp.isEmpty()){
-			initProject(lp.get(0));
-		}
 	}
 
 	private void initProject(Projects.Project project){
@@ -72,6 +86,9 @@ public class MainController implements Initializable {
 
 	@FXML
 	public final List<Col> columnIDs;
+
+	@FXML
+	private VBox root;
 
 	private Col findColByName(String title){
 		Optional<Col> col = columnIDs.stream().filter((c) -> c.getName().equals(title)).findFirst();
@@ -122,5 +139,16 @@ public class MainController implements Initializable {
 			kanban.getChildren().remove(col);
 			columns.delete(id);
 		});
+	}
+
+	@FXML
+	public void addProject() throws IOException {
+		Stage newStage = new Stage();
+		Parent root = FXMLLoader.load(AddProjectView.class.getResource("add-project-view.fxml"));
+		newStage.setScene(new Scene(root));
+		newStage.setTitle("Ajouter un projet");
+		newStage.initModality(Modality.WINDOW_MODAL);
+		newStage.initOwner(this.root.getScene().getWindow());
+		newStage.show();
 	}
 }

@@ -3,9 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="555.0" prefWidth="1049.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.metropolis.gestion.gui.MainController">
+<VBox alignment="CENTER" prefHeight="555.0" prefWidth="1049.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.metropolis.gestion.gui.MainController" fx:id="root">
     <MenuBar>
         <Menu fx:id="menuProjects" text="Projects" />
+        <Menu text="Édition">
+            <MenuItem text="Ajouter un projet" onAction="#addProject"/>
+        </Menu>
     </MenuBar>
     <TabPane prefHeight="588.0" prefWidth="1012.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <Tab text="Kanban">
@@ -14,8 +17,7 @@
                             AnchorPane.topAnchor="0.0">
                     <HBox fx:id="kanban" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="${kanban.parent.height}"/>
                 </ScrollPane>
-                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#onAddClick" text="+" fx:id="add"
-                        AnchorPane.rightAnchor="0"/>
+                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#onAddClick" text="+" AnchorPane.rightAnchor="0"/>
             </AnchorPane>
         </Tab>
     </TabPane>
