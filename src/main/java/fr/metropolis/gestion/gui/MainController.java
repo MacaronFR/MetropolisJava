@@ -3,7 +3,6 @@ package fr.metropolis.gestion.gui;
 import fr.metropolis.gestion.api.db.Cards;
 import fr.metropolis.gestion.api.db.Columns;
 import fr.metropolis.gestion.api.db.Projects;
-import fr.metropolis.gestion.api.db.Users;
 import fr.metropolis.gestion.gui.component.Card;
 import fr.metropolis.gestion.gui.component.Col;
 import javafx.fxml.FXML;
@@ -70,9 +69,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	private HBox kanban;
-
-	@FXML
-	private Button add;
 
 	@FXML
 	public final List<Col> columnIDs;
