@@ -41,13 +41,14 @@ public class Card extends VBox {
 		DatePicker start = new DatePicker();
 		if(dbCard.getStart() != null){
 			start.setValue(dbCard.getStart().toLocalDate());
-			ActionEvent test = new ActionEvent(start, tail -> null);
 		}
 		Label endLabel = new Label("Fin");
 		DatePicker end = new DatePicker();
 		if(dbCard.getEnd() != null){
 			end.setValue(dbCard.getEnd().toLocalDate());
 		}
+		setCellStartDate(end, start, warning);
+		setCellEndDate(end, start);
 		HBox move = new HBox();
 		Button left = new Button("<");
 		Button right = new Button(">");
@@ -179,7 +180,7 @@ public class Card extends VBox {
 
 		end.focusedProperty().addListener(((observable, oldValue, newValue) -> {
 			if(oldValue != newValue && !newValue){
-				dbCard.setStart(java.sql.Date.valueOf(end.getValue()));
+				dbCard.setEnd(java.sql.Date.valueOf(end.getValue()));
 				ctrl.cards.update(dbCard);
 			}
 		}));
@@ -216,6 +217,10 @@ public class Card extends VBox {
 		DatePicker end = (DatePicker) event.getSource();
 		DatePicker start = (DatePicker) ((VBox) end.getParent()).getChildren().get(1);
 		Label warning = (Label) ((HBox) ((VBox) end.getParent().getParent()).getChildren().get(0)).getChildren().get(2);
+		setCellStartDate(end, start, warning);
+	}
+
+	private void setCellStartDate(DatePicker end, DatePicker start, Label warning){
 		Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
@@ -227,7 +232,11 @@ public class Card extends VBox {
 			}
 		};
 		start.setDayCellFactory(dayCellFactory);
-		if (end.getValue().isBefore(LocalDate.now())) {
+		setWarning(warning, end);
+	}
+
+	private void setWarning(Label warning, DatePicker end){
+		if (end.getValue() != null && end.getValue().isBefore(LocalDate.now())) {
 			warning.setText("Dépassé");
 		} else {
 			warning.setText("");
@@ -237,6 +246,10 @@ public class Card extends VBox {
 	private void changeStartDate(ActionEvent event) {
 		DatePicker start = (DatePicker) event.getSource();
 		DatePicker end = (DatePicker) ((VBox) start.getParent()).getChildren().get(3);
+		setCellEndDate(end, start);
+	}
+
+	private void setCellEndDate(DatePicker end, DatePicker start){
 		Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {

@@ -1,7 +1,10 @@
 package fr.metropolis.gestion.api.db;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsersOnProjects extends DB<UsersOnProjects.UserOnProject>{
 
@@ -13,6 +16,18 @@ public class UsersOnProjects extends DB<UsersOnProjects.UserOnProject>{
 	@Override
 	public UserOnProject getById(int id){
 		return new UserOnProject().buildFromResultSet(getDataById(id));
+	}
+
+	public void addUserOnProject(int user, int project){
+		String req = "INSERT INTO USERS_ON_PROJECTS (user, project) VALUES (?, ?);";
+		try{
+			PreparedStatement prep = con.prepareStatement(req);
+			prep.setInt(1, user);
+			prep.setInt(2, project);
+			prep.executeQuery();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	public final class UserOnProject implements TableRow<UserOnProject>{

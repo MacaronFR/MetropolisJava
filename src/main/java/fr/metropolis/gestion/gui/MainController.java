@@ -5,11 +5,9 @@ import fr.metropolis.gestion.api.db.Columns;
 import fr.metropolis.gestion.api.db.Projects;
 import fr.metropolis.gestion.gui.component.Card;
 import fr.metropolis.gestion.gui.component.Col;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -35,7 +33,7 @@ public class MainController implements Initializable {
 		cards = new Cards();
 	}
 
-	private final int userID = 1;
+	public int userID = 1;
 	private final Projects projects;
 	public Columns columns;
 	public Cards cards;
@@ -144,11 +142,19 @@ public class MainController implements Initializable {
 	@FXML
 	public void addProject() throws IOException {
 		Stage newStage = new Stage();
-		Parent root = FXMLLoader.load(AddProjectView.class.getResource("add-project-view.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(GestionApplication.class.getResource("add-project-view.fxml"));
+		Parent root = fxmlLoader.load();
+		AddProjectView controller = fxmlLoader.getController();
+		controller.idUser = userID;
+		//Parent root = FXMLLoader.load(AddProjectView.class.getResource("add-project-view.fxml"));
 		newStage.setScene(new Scene(root));
 		newStage.setTitle("Ajouter un projet");
 		newStage.initModality(Modality.WINDOW_MODAL);
 		newStage.initOwner(this.root.getScene().getWindow());
 		newStage.show();
+		newStage.setOnCloseRequest((e) -> {
+			List<Projects.Project> lp = projects.getProjectByUser(userID);
+			initProjectsList(lp);
+		});
 	}
 }

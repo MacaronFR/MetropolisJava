@@ -51,6 +51,8 @@ public class LoginView {
 			FXMLLoader fxmlLoader = new FXMLLoader(GestionApplication.class.getResource("main-view.fxml"));
 			Stage stage = (Stage)root.getScene().getWindow();
 			Scene main = new Scene(fxmlLoader.load(), 500, 500);
+			MainController controller = fxmlLoader.getController();
+			controller.userID = u.getId();
 			stage.setScene(main);
 		}else{
 			mdpError.setText("Mot de passe incorrect");

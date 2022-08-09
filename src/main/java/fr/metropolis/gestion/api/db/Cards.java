@@ -105,7 +105,7 @@ public class Cards extends DB<Cards.Card>{
 			}
 			stmt.setInt(6, card.getColumn().getId());
 			stmt.setInt(7, card.getId());
-			stmt.executeUpdate();
+			System.out.println(stmt.executeUpdate());
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
