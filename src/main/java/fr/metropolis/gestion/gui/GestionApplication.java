@@ -11,7 +11,7 @@ public class GestionApplication extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(GestionApplication.class.getResource("login-view.fxml"));
-		Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+		Scene scene = new Scene(fxmlLoader.load());
 		stage.setTitle("Gestion de projet");
 		stage.setScene(scene);
 		stage.show();

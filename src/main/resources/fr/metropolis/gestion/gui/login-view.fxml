@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.metropolis.gestion.gui.LoginView" fx:id="root">
+<AnchorPane fx:id="root" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.metropolis.gestion.gui.LoginView">
    <TextField fx:id="user" layoutX="187.0" layoutY="94.0" />
-   <TextField fx:id="mdp" layoutX="187.0" layoutY="139.0" />
+   <PasswordField fx:id="mdp" layoutX="188.0" layoutY="139.0" />
    <Label layoutX="98.0" layoutY="98.0" text="Identifiant :" />
    <Label layoutX="80.0" layoutY="143.0" text="Mot de passe :" />
-   <Button fx:id="login" layoutX="221.0" layoutY="188.0" mnemonicParsing="false" text="Se connecter" onMouseClicked="#onLoginClick"/>
-   <Label layoutX="364.0" layoutY="98.0" prefHeight="16.0" fx:id="loginError"/>
-   <Label layoutX="364.0" layoutY="143.0" fx:id="mdpError"/>
+   <Button layoutX="221.0" layoutY="188.0" mnemonicParsing="false" onAction="#onLoginAction" text="Se connecter" />
+   <Label fx:id="loginError" layoutX="364.0" layoutY="98.0" prefHeight="16.0" />
+   <Label fx:id="mdpError" layoutX="364.0" layoutY="143.0" />
 </AnchorPane>

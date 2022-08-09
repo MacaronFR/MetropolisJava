@@ -5,7 +5,6 @@ import fr.metropolis.gestion.api.db.Users;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -14,9 +13,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginView {
-
-	@FXML
-	private Button login;
 
 	@FXML
 	private TextField user;
@@ -36,7 +32,7 @@ public class LoginView {
 	private final Users users = new Users();
 
 	@FXML
-	public void onLoginClick() throws IOException {
+	public void onLoginAction() throws IOException {
 		Users.User u = users.getByName(user.getText());
 		if(u == null){
 			loginError.setText("Nom d'utilisateur inconnu");
@@ -47,7 +43,7 @@ public class LoginView {
 		String hashedPassword = u.getPassword();
 		String salt = u.getSalt();
 		String hash = Utils.hashPassword(mdp.getText(), salt);
-		if(hash.equals(hashedPassword)){
+		if(hash != null && hash.equals(hashedPassword)){
 			FXMLLoader fxmlLoader = new FXMLLoader(GestionApplication.class.getResource("main-view.fxml"));
 			Stage stage = (Stage)root.getScene().getWindow();
 			Scene main = new Scene(fxmlLoader.load(), 500, 500);
