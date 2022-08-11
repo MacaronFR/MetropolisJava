@@ -9,7 +9,7 @@ abstract public class DB<T> {
 
 	static {
 		try {
-			con = DriverManager.getConnection("jdbc:mariadb://151.80.58.137:1653/PA", "macaron", System.getenv("DB_PASS"));
+			con = DriverManager.getConnection("jdbc:mariadb://151.80.58.137:1653/PA", "PA", "passwordPA");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
