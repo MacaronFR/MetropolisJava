@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
-    id 'org.beryx.jlink' version '2.24.1'
 }
 
 group 'com.example'
@@ -52,6 +51,6 @@ jar{
         attributes 'Main-Class': 'fr.metropolis.gestion.gui.Main'
     }
     from{
-        //configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
 }

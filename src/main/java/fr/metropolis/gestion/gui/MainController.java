@@ -142,6 +142,9 @@ public class MainController implements Initializable {
 		columnIDs.stream().filter((col -> col.getDbID() == id)).findFirst().ifPresent(col -> {
 			columnIDs.remove(col);
 			kanban.getChildren().remove(col);
+			cards.getByColumn(id).forEach((v) -> {
+				cards.delete(v);
+			});
 			columns.delete(id);
 		});
 	}
