@@ -1,6 +1,5 @@
 package fr.metropolis.gestion.gui;
 
-import fr.metropolis.gestion.PluginLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,8 +14,6 @@ public class GestionApplication extends Application {
 		stage.setTitle("Gestion de projet");
 		stage.setScene(scene);
 		stage.show();
-		PluginLoader pl = new PluginLoader();
-		pl.loadPlugin();
 	}
 
 	public static void main(String[] args) {

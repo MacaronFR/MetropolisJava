@@ -67,6 +67,7 @@ public class MainController implements Initializable {
 		actualProject = project;
 		kanban.getChildren().clear();
 		List<Columns.Column> lc = columns.getByProject(actualProject.getId());
+		columnIDs.clear();
 		for (Columns.Column column : lc) {
 			Col col = new Col(column.getName(), column.getId(), this);
 			col.setListener((observable, oldValue, newValue) -> {
@@ -87,6 +88,12 @@ public class MainController implements Initializable {
 
 	@FXML
 	private VBox root;
+
+	@FXML
+	private MenuBar menu;
+
+	@FXML
+	private TabPane tab;
 
 	private Col findColByName(String title){
 		Optional<Col> col = columnIDs.stream().filter((c) -> c.getName().equals(title)).findFirst();
@@ -146,15 +153,14 @@ public class MainController implements Initializable {
 		Parent root = fxmlLoader.load();
 		AddProjectView controller = fxmlLoader.getController();
 		controller.idUser = userID;
-		//Parent root = FXMLLoader.load(AddProjectView.class.getResource("add-project-view.fxml"));
 		newStage.setScene(new Scene(root));
 		newStage.setTitle("Ajouter un projet");
 		newStage.initModality(Modality.WINDOW_MODAL);
 		newStage.initOwner(this.root.getScene().getWindow());
-		newStage.show();
-		newStage.setOnCloseRequest((e) -> {
+		newStage.setOnHiding((e) -> {
 			List<Projects.Project> lp = projects.getProjectByUser(userID);
 			initProjectsList(lp);
 		});
+		newStage.show();
 	}
 }
